@@ -3,19 +3,35 @@ package example1;
 public class Example1 {
 
     public static <T>void print(Node<T> node) {
-       // todo your code here
+       Node<T> current = node;
+       while (current != null) {
+           System.out.print(current.data + " ");
+           current = current.link;
+       }
     }
 
     public static <T>void printRecursively(Node<T> node){
-        // todo your code here
+        System.out.print(node.data + " ");
+        if(node.link != null){
+            printRecursively(node.link);
+        }
     }
 
     public static <T>void printInReverse(Node<T> node){
-        // todo your code here
+        if(node.link != null) {
+            printInReverse(node.link);
+        }
+        System.out.print(node.data + " ");
     }
 
     public static <T>void append(Node<T> node, T data){
-        // todo your code here
+        Node<T> current = node;
+        while (current.link != null) {
+            current = current.link;
+        }
+        Node<T> newNode=new Node<>(data);
+        current.link=newNode;
+
     }
 
     public static void main(String[] args) {
