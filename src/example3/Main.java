@@ -1,6 +1,4 @@
-package longlist.record;
-
-import example3.DoubleLinkedList;
+package example3;
 
 import java.util.Arrays;
 

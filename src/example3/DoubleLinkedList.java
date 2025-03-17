@@ -43,99 +43,25 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return null;
     }
     public T set(int index, T element) {
-        Node<T> current = head;
-        for (int i = 0; current!=null; i++) {
-            if(index==i){
-                current.data = element;
-                return current.data;
-            }
-            current = current.next;
-        }
-        return null;
+        // todo your code here
     }
-    public boolean add(int index, T element) {
-        Node<T> newNode = new Node<>(element);
-        Node<T> current = head;
-        for (int i = 0; current!=null; i++) {
-            if(index==i){
-                if (current.prev==null){
-                    newNode.next = current;
-                    current.prev = newNode;
-                    newNode.prev = null;
-                }
-                else if (current.next == null){
-                    current.prev.next = newNode;
-                    newNode.prev = current.prev;
-                    newNode.next = current;
-                    current.prev = newNode;
-                }else{
-                    newNode.next = current;
-                    newNode.prev = current.prev;
-                    current.prev.next = newNode;
-                    current.prev = newNode;
-                }
-                break;
-            }
-            current = current.next;
-        }
-        /// append node
-        if (head==null) {
-            head = newNode;
-            tail = newNode;
-            return true;
-        }else {
-            tail.next = newNode;
-            newNode.prev = tail;
-            tail = newNode;
-            return true;
-        }
+    public void add(int index, T element) {
+        // todo your code here
     }
     public T removeAt(int index) {
-        Node<T> current = head;
-        for (int i = 0; current!=null; i++) {
-            if(index==i){
-                if(current.prev==null){
-                    head = current.next;
-                    head.prev = null;
-                } else if (current.next == null) {
-                    tail = current.prev;
-                    tail.next = null;
-                } else{
-                    current.prev.next = current.next;
-                    current.next.prev = current.prev;
-                }
-                return current.data;
-            }
-            current = current.next;
-        }
+        // todo your code here
         return null;
     }
 
     public T remove(T item) {
-        Node<T> current = head;
-        for (int i = 0; current!=null; i++) {
-            if(current.data.equals(item)){
-                if(current.prev==null){
-                    head = current.next;
-                    head.prev = null;
-                } else if (current.next == null) {
-                    tail = current.prev;
-                    tail.next = null;
-                } else{
-                    current.prev.next = current.next;
-                    current.next.prev = current.prev;
-                }
-                return current.data;
-            }
-            current = current.next;
-        }
+        // todo your code here
         return null;
     }
 
 
     @Override
     public Iterator<T> iterator() {
-        return new DoubleLinkedListIterator<>(head);
+        return new DoubleLinkedListIterator<>();
     }
 
     public Object[] toArray() {
@@ -149,64 +75,30 @@ public class DoubleLinkedList<T> implements Iterable<T> {
     }
 
     public boolean containsAll(DoubleLinkedList<T> other) {
-        for (Object o : other) {
-            if (!contains(o)) {
-                return false;
-            }
-        }
-        return true;
+        // todo your code here
+        return false;
     }
 
     public boolean addAll(DoubleLinkedList<T> other) {
-        tail.next = other.head;
-        tail = other.tail;
-        return true;
+        // todo your code here
+        return false;
     }
 
     public boolean addAll(int index, DoubleLinkedList<T> other) {
-        Node<T> current = head;
-        for (int i = 0; current!=null; i++) {
-            if(index==i){
-                if (current.prev==null){
-                    head = other.head;
-                    other.tail = current;
-                    current.prev = other.tail;
-                }else if(current.next==null){
-                    tail.next = other.head;
-                    other.head.prev = tail;
-                    tail = other.tail;
-                }else{
-                    current.prev.next = other.head;
-                    other.head.prev = current.prev;
-                    other.tail.next = current;
-                    current.prev = other.tail;
-                }
-                return true;
-            }
-            current = current.next;
-        }
+        // todo your code here
         return false;
     }
 
     public void removeAll(DoubleLinkedList<T> other) {
-        for (T o : other) {
-            while (contains(o)){
-                remove(o);
-            }
-        }
+        // todo your code here
     }
 
     public void retainAll(DoubleLinkedList<T> other) {
-        for (T o : this) {
-            while (!other.contains(o)) {
-                remove(o);
-            }
-        }
+        // todo your code here
     }
 
     public void clear() {
-        head = null;
-        tail = null;
+        // todo your code here
     }
 
     public DoubleLinkedList<T> subList(int fromIndex, int toIndex) {
@@ -216,21 +108,17 @@ public class DoubleLinkedList<T> implements Iterable<T> {
 
 class DoubleLinkedListIterator<T> implements Iterator<T>{
 
-    private Node<T> current;
 
-    DoubleLinkedListIterator(Node<T> current) {
-        this.current = current;
+    DoubleLinkedListIterator() {
     }
 
     @Override
     public boolean hasNext() {
-        return current!=null;
+        return false;
     }
 
     @Override
     public T next() {
-        T element = current.data;
-        current = current.next;
-        return element;
+       return null;
     }
 }
