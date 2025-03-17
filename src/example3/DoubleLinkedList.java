@@ -44,6 +44,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
     }
     public T set(int index, T element) {
         // todo your code here
+        return null;
     }
     public void add(int index, T element) {
         // todo your code here
