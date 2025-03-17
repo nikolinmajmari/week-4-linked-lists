@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class DoubleLinkedList<T> implements Iterable<T> {
-    protected Node<T> head = null;
-    protected Node<T> tail = null;
+    public Node<T> head = null;
+    public Node<T> tail = null;
 
     public int size() {
         Node<T> current = head;
@@ -43,11 +43,40 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return null;
     }
     public T set(int index, T element) {
-        // todo your code here
+        Node<T> current = head;
+        int i = 0;
+        while (current!=null) {
+            if (i==index) {
+                current.data = element;
+                return current.data;
+            }
+            current = current.next;
+            i++;
+        }
         return null;
     }
     public void add(int index, T element) {
-        // todo your code here
+        Node<T> newNode = new Node<>(element);
+        if(index==0){
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+            return;
+        }
+        Node<T> current = head;
+        int i = 0;
+        while (current!=null) {
+            if(i==index){
+                newNode.prev = current.prev;
+                newNode.next = current;
+                current.prev.next = newNode;
+                current.prev = newNode;
+                return;
+            }
+            current = current.next;
+            index++;
+        }
+        return;
     }
     public T removeAt(int index) {
         // todo your code here
@@ -62,7 +91,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new DoubleLinkedListIterator<>();
+        return new DoubleLinkedListIterator<>(head);
     }
 
     public Object[] toArray() {
@@ -81,12 +110,23 @@ public class DoubleLinkedList<T> implements Iterable<T> {
     }
 
     public boolean addAll(DoubleLinkedList<T> other) {
-        // todo your code here
-        return false;
+        if(head==null){
+            head = other.head;
+            tail = other.tail;
+        }
+        if (other.head==null){
+            return true;
+        }
+        else {
+            tail.next = other.head;
+            other.head.prev = tail;
+            tail = other.tail;
+        }
+        return true;
     }
 
     public boolean addAll(int index, DoubleLinkedList<T> other) {
-        // todo your code here
+
         return false;
     }
 
@@ -109,17 +149,21 @@ public class DoubleLinkedList<T> implements Iterable<T> {
 
 class DoubleLinkedListIterator<T> implements Iterator<T>{
 
+    private Node<T> current;
 
-    DoubleLinkedListIterator() {
+    DoubleLinkedListIterator(Node<T> current) {
+        this.current = current;
     }
 
     @Override
     public boolean hasNext() {
-        return false;
+        return current!=null;
     }
 
     @Override
     public T next() {
-       return null;
+       T result = current.data;
+       current = current.next;
+       return result;
     }
 }
