@@ -1,9 +1,7 @@
 package example3;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class DoubleLinkedList<T> implements Iterable<T> {
     protected Node<T> head = null;
@@ -58,23 +56,17 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         Node<T> current = head;
         for (int i = 0; current!=null; i++) {
             if(index==i){
-                if (current.prev==null){
-                    newNode.next = current;
-                    current.prev = newNode;
-                    newNode.prev = null;
-                }
-                else if (current.next == null){
-                    current.prev.next = newNode;
+                if(current.prev!=null){
                     newNode.prev = current.prev;
                     newNode.next = current;
-                    current.prev = newNode;
-                }else{
-                    newNode.next = current;
-                    newNode.prev = current.prev;
                     current.prev.next = newNode;
                     current.prev = newNode;
+                } else {
+                    newNode.next = current;
+                    current.prev = newNode;
+                    head = newNode;
                 }
-                break;
+                return true;
             }
             current = current.next;
         }
@@ -84,8 +76,8 @@ public class DoubleLinkedList<T> implements Iterable<T> {
             tail = newNode;
             return true;
         }else {
-            tail.next = newNode;
             newNode.prev = tail;
+            tail.next = newNode;
             tail = newNode;
             return true;
         }
@@ -94,15 +86,18 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         Node<T> current = head;
         for (int i = 0; current!=null; i++) {
             if(index==i){
-                if(current.prev==null){
-                    head = current.next;
-                    head.prev = null;
-                } else if (current.next == null) {
-                    tail = current.prev;
-                    tail.next = null;
-                } else{
+                if (current.prev!=null && current.next!=null){
                     current.prev.next = current.next;
                     current.next.prev = current.prev;
+                } else if (current.prev==null&&current.next==null) {
+                    head = null;
+                    tail = null;
+                } else if ( current.prev==null) {
+                    head = current.next;
+                    head.prev = null;
+                }else {
+                    tail = current.prev;
+                    tail.next =null;
                 }
                 return current.data;
             }
@@ -111,25 +106,27 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return null;
     }
 
-    public T remove(T item) {
+    public void remove(T item) {
         Node<T> current = head;
         for (int i = 0; current!=null; i++) {
             if(current.data.equals(item)){
-                if(current.prev==null){
-                    head = current.next;
-                    head.prev = null;
-                } else if (current.next == null) {
-                    tail = current.prev;
-                    tail.next = null;
-                } else{
+                if (current.prev!=null && current.next!=null){
                     current.prev.next = current.next;
                     current.next.prev = current.prev;
+                } else if (current.prev==null&&current.next==null) {
+                    head = null;
+                    tail = null;
+                } else if ( current.prev==null) {
+                    head = current.next;
+                    head.prev = null;
+                }else {
+                    tail = current.prev;
+                    tail.next =null;
                 }
-                return current.data;
+                return;
             }
             current = current.next;
         }
-        return null;
     }
 
 
@@ -210,7 +207,22 @@ public class DoubleLinkedList<T> implements Iterable<T> {
     }
 
     public DoubleLinkedList<T> subList(int fromIndex, int toIndex) {
-        return new DoubleLinkedList<T>();
+        DoubleLinkedList<T> list = new DoubleLinkedList<>();
+        int index = 0;
+        Node<T> current = head;
+        while (current!=null) {
+            if (index>=fromIndex&&index<=toIndex){
+                list.add(index-fromIndex,current.data);
+            }
+            index++;
+            current = current.next;
+        }
+        return list;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(toArray());
     }
 }
 
